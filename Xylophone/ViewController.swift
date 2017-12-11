@@ -13,23 +13,17 @@ class ViewController: UIViewController {
 
     
     
-    var player: AVAudioPlayer?
+    var audioPlayer: AVAudioPlayer!
     
     func playSound(notePressed: String) {
-        guard let url = Bundle.main.url(forResource: notePressed, withExtension: "wav") else { return }
+        
+        let soundURL = Bundle.main.url(forResource: notePressed, withExtension: "wav")
         
         do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-            try AVAudioSession.sharedInstance().setActive(true)
-            
-            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
-            
-            guard let player = player else { return }
-            
-            player.play()
-            
-        } catch let error {
-            print(error.localizedDescription)
+            try audioPlayer = AVAudioPlayer(contentsOf: soundURL!)
+            audioPlayer.play()
+        } catch {
+            print(error)
         }
     }
 
